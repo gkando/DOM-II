@@ -1,10 +1,5 @@
 // Your code goes here
 
-
-// document.querySelector(".nav").addEventListener("mouseover", function(event){
-//     console.log(event.target.text);
-//   });
-
 // mouseover
   let currentElem = null;
   document.querySelector(".nav").onmouseover = function(event) {
@@ -42,6 +37,7 @@
     }
 
   document.addEventListener('keydown', function(event) {
+    event.preventDefault();
     if (event.code == 'ShiftRight' || 'ShiftLeft') {
       document.querySelector("html").style.backgroundColor = getRandomColor()
     }
@@ -57,34 +53,38 @@ let siteImgs = [
 function zoom(event) {
   event.preventDefault();
   var i;
-  //get current bg name 
- 
 
   function findWithAttr(array, attr, value) {
+    console.log(value)
     for(var i = 0; i < array.length; i += 1) {
         if(array[i][attr] === value) {
-            return i;
+            i = i + 1
+            return array[i]["destination"]
         }
     }
     return -1;
 }
-findWithAttr(siteImgs, 'destination', 'rome'); // returns 1
 
-  slideIndex++;
-  if (slideIndex > x.length) {slideIndex = 1} 
-  x[slideIndex-1].style.display = "block"; 
+  let img_name = findWithAttr(siteImgs, 'destination', document.querySelector("#dest-img").alt); // returns 1
+  console.log(img_name)
 
-  document.addEventListener('keydown', function(event) {
-    if (event.code == 'ShiftRight' || 'ShiftLeft') {
-      document.querySelector("html").style.backgroundColor = getRandomColor()
-    }
-  });
-  el.style.transform = `scale(${scale})`;
+
+  // slideIndex++;
+  // if (slideIndex > x.length) {slideIndex = 1} 
+  // x[slideIndex-1].style.display = "block"; 
+
+  // document.addEventListener('keydown', function(event) {
+  //   if (event.code == 'ShiftRight' || 'ShiftLeft') {
+  //   }
+  // });
 }
 
-// const el = document.querySelector('div');
-// el.onwheel = zoom;
 
+document.getElementById("destination-imgs").addEventListener("wheel", zoom);
+
+function myFunction() {
+  this.style.fontSize = "35px";
+}
 
 // drag / drop
 
@@ -97,7 +97,6 @@ findWithAttr(siteImgs, 'destination', 'rome'); // returns 1
 
     bus.style.position = 'absolute';
     bus.style.zIndex = 1000;
-    bus.style.width = "50% !important";
     document.body.append(bus);
 
     moveAt(event.pageX, event.pageY);
@@ -116,7 +115,7 @@ findWithAttr(siteImgs, 'destination', 'rome'); // returns 1
 
       if (!elemBelow) return;
 
-      let droppableBelow = elemBelow.closest('.droppable');
+      let droppableBelow = elemBelow.closest('body');
       if (currentDroppable != droppableBelow) {
         if (currentDroppable) {
           leaveDroppable(currentDroppable);
@@ -149,54 +148,45 @@ findWithAttr(siteImgs, 'destination', 'rome'); // returns 1
     return false;
   }
 
-// load
-
-// focus
-
-// resize
+  // load
+function modLogo(tag) {
+  let x = document.querySelector('.logo-heading').textContent + " - " + tag;
+  document.querySelector('.logo-heading').innerHTML = x;
+}
+window.onload = (event) => {
+  modLogo("ready to go!");
+};
 
 // scroll
+function revertLogo() {
+  if (document.body.scrollTop > .5 || document.documentElement.scrollTop > .5) {
+    document.querySelector('.logo-heading').textContent = "Fun Bus"
+  } else {
+    modLogo("ready to go!");
+  }
+}
+document.addEventListener("scroll", revertLogo);
 
-// select
+// another scroll event
+
+function navBus() {
+  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+    var elem = document.getElementById("bus");
+    elem.style.position = "fixed";
+    elem.style.left = '50rem'
+    elem.style.top = '0rem' 
+    elem.style.width = '18rem'
+    elem.style.zIndex = '4'
+  } else {
+    
+  }
+}
+document.addEventListener("scroll", navBus);
+
 
 // dblclick
-
-
-// document.addEventListener('keydown', logKey);
-// function logKey(e) {
-//     log.textContent += ` ${e.code}`;
-//   }
-
-
-// // Map
-//   google.charts.load('current', {
-//     'packages':['geochart'],
-//     // Note: you will need to get a mapsApiKey for your project.
-//     // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-//     'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
-//   });
-//   google.charts.setOnLoadCallback(drawRegionsMap);
-
-//   function drawRegionsMap() {
-//     var data = google.visualization.arrayToDataTable([
-//       ['Country', 'Price'],
-//       ['Germany', 300],
-//       ['Italy', 300],
-//       ['Spain', 400],
-//       ['Portugal', 500],
-//       ['France', 600],
-//       ['Romania', 250],
-//       ['Sweden', 250],
-//       ['Finland', 250],
-//       ['Norway', 250],
-//       ['Denmark', 250],
-//       ['Belgium', 250],
-//       ['United Kingdom', 950]
-//     ]);
-
-//     var options = {displayMode: 'auto', legend: 'none', region: 150};
-
-//     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
-//     chart.draw(data, options);
-//   }
+function zoomZoom(){
+  console.log('dbl')
+  document.getElementById("bus").classList.toggle('bus-go');
+}
+document.querySelector(".logo-heading").addEventListener("dblclick", zoomZoom);

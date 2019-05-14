@@ -17,7 +17,18 @@ header{
     z-index:4;
 }
 
-#bus {
-    width: 50%;
-    height: auto;
+.bus-go { 
+    position: relative;
+    animation: mymove 5s 1;
+  }
+.bus-go {
+    animation-timing-function: ease;
 }
+@keyframes mymove {
+     0%   {left: 500px}
+    25%  {left: 100%;}
+    50%  {left: 0%; display: none;}
+    100% {left: 500px;}
+
+    }
+
