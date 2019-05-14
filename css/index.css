@@ -350,3 +350,10 @@ img {
   background: #FFFFFF;
   color: #17A2B8;
 }
+header {
+  z-index: 4;
+}
+#bus {
+  width: 50%;
+  height: auto;
+}
